@@ -289,9 +289,9 @@ sudo tail -f kern.log
 The kernel log can contain hardware, driver, AppArmor, startup, and external-device activity.
 
 <p align="center">
-  <img width="900"
-       alt="Linux kern log records displayed in the terminal"
-       src="PASTE-KERN-LOG-IMAGE-URL-HERE" />
+  <img src="https://github.com/user-attachments/assets/ff40d78c-4d81-46af-9119-5ed0335be193"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
 </p>
 
 <p align="center">
@@ -309,9 +309,9 @@ sudo more -f auth.log
 The authentication log records login attempts, `sudo` activity, opened and closed sessions, and commands executed with elevated privileges.
 
 <p align="center">
-  <img width="900"
-       alt="Linux auth log authentication and sudo records displayed in the terminal"
-       src="PASTE-AUTH-LOG-IMAGE-URL-HERE" />
+  <img src="https://github.com/user-attachments/assets/54ee299d-e5fe-4de1-a094-42c570f56a64"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
 </p>
 
 <p align="center">
@@ -353,6 +353,26 @@ I examined `auth.log` and used E3 Advanced Search to identify failed and success
 
 The variable intervals between the failed attempts were more consistent with manual activity than a rapid automated brute-force attack.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/82bd1ed8-83d7-4e2d-ad11-80e93698d7df"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
+</p>
+
+<p align="center">
+  <em>Figure 12A: Failed SSH login attempts against `noel` from `192.168.78.1`, including attempts using source port `14444`.</em>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/10d01b9f-f038-40ff-ab8b-217ea65cff66"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
+</p>
+
+<p align="center">
+  <em>Figure 12B: Failed SSH login attempts against `dominic` from `192.168.78.1`, including attempts using source port `4663`.</em>
+</p>
+
 ### Successful Login Finding
 
 The most recent successful login identified for `dominic` occurred on:
@@ -387,6 +407,19 @@ The records showed installation commands executed by the user `dominic`.
 
 The strongest suspicious finding was `logkeys`, which could have been used to capture legitimate credentials. The installation of supporting development tools may indicate that software was compiled or configured directly on the server.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/89580e2d-a1e2-47d4-9b3a-264a23738572"
+       alt="Linux forensic investigation evidence"
+       width="49%">
+  <img src="https://github.com/user-attachments/assets/5c91394a-178e-4869-aa42-fe1b7d1d8802"
+       alt="Linux forensic investigation evidence"
+       width="49%">
+</p>
+
+<p align="center">
+  <em>Figure 13: `apt-get install` records showing software installed by the user `dominic`, including the `logkeys` keylogger.</em>
+</p>
+
 ---
 
 ## Part 3: Identify External Drive Attachments
@@ -407,6 +440,12 @@ The investigation identified the following USB device:
 
 The USB connection occurred before the suspicious login activity and supported the possibility of physical access to the server.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3e82cc89-3402-47b8-83e1-6ecf46c3497a"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
+</p>
+
 ---
 
 # Section 3: Challenge and Analysis
@@ -422,13 +461,13 @@ I researched Linux printing records and examined the CUPS log directory in E3:
 I opened `page_log` in Document View. The record showed that the user `dominic` generated a print job on June 10, 2021, at approximately 10:30:36.
 
 <p align="center">
-  <img width="900"
-       alt="Linux CUPS page log displayed in Paraben E3 Document View"
-       src="PASTE-PRINTER-LOG-IMAGE-URL-HERE" />
+  <img src="https://github.com/user-attachments/assets/fa8c1d3f-6414-4c5e-aa76-02165cfc1fed"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
 </p>
 
 <p align="center">
-  <em>Figure 12: CUPS `page_log` record showing printing activity associated with the user `dominic`.</em>
+  <em>Figure 14: CUPS `page_log` record showing printing activity associated with the user `dominic`.</em>
 </p>
 
 ---
@@ -452,13 +491,13 @@ The command used `dd` to copy the system disk `/dev/sda` into an image file name
 This finding supports the possibility that a full disk image was created and written to the connected USB storage device for exfiltration.
 
 <p align="center">
-  <img width="900"
-       alt="Record of the Linux dd disk imaging command displayed in Paraben E3 Text View"
-       src="PASTE-DD-COMMAND-IMAGE-URL-HERE" />
+  <img src="https://github.com/user-attachments/assets/857826b2-945d-4fa2-bb47-6f9263709314"
+       alt="Linux forensic investigation evidence in Paraben's E3"
+       width="800">
 </p>
 
 <p align="center">
-  <em>Figure 13: Log record showing `dd` used to create a forensic-style image of `/dev/sda` on externally mounted storage.</em>
+  <em>Figure 15: Log record showing `dd` used to create a forensic-style image of `/dev/sda` on externally mounted storage.</em>
 </p>
 
 ---
